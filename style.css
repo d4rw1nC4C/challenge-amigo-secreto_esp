@@ -88,8 +88,13 @@ body {
 }
 
 .button-container {
-    width: 300px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     justify-content: center;
+    align-items: center;
 }
 
 /* Estilos de entrada de texto */
@@ -142,21 +147,388 @@ ul {
     text-align: center;
 }
 
-/* Botón de sortear título */
-.button-draw {
+/* ========================================
+   BUTTON SYSTEM - UX/UI Best Practices
+   ======================================== */
+
+/* Button Base Styles */
+.button-primary,
+.button-secondary {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
-    padding: 10px 40px;
-    color: var(--color-white);
-    background-color: var(--color-button);
+    padding: 12px 24px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
 }
 
-.button-draw img {
-    margin-right: 40px;
+/* Button Content Structure */
+.button-icon {
+    font-size: 18px;
+    line-height: 1;
 }
 
-.button-draw:hover {
-    background-color: var(--color-button-hover);
+.button-text {
+    line-height: 1.2;
+}
+
+/* Primary Button - Main Action (Sortear) */
+.button-primary {
+    background: linear-gradient(135deg, var(--color-button) 0%, #ff7849 100%);
+    color: var(--color-white);
+    box-shadow: 0 4px 12px rgba(254, 101, 43, 0.3);
+}
+
+.button-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--color-button-hover) 0%, #e55720 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(254, 101, 43, 0.4);
+}
+
+.button-primary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(254, 101, 43, 0.3);
+}
+
+/* Secondary Button - Destructive Action (Limpiar) */
+.button-secondary {
+    background: var(--color-white);
+    color: #dc3545;
+    border-color: #dc3545;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-top: 15px;
+}
+
+.button-secondary:hover:not(:disabled) {
+    background: #dc3545;
+    color: var(--color-white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(220, 53, 69, 0.3);
+}
+
+.button-secondary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+}
+
+/* Disabled State - Consistent for both buttons */
+.button-primary:disabled,
+.button-secondary:disabled {
+    background: #f8f9fa;
+    color: #6c757d;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.6;
+}
+
+.button-primary:disabled .button-icon,
+.button-secondary:disabled .button-icon {
+    opacity: 0.5;
+}
+
+/* Focus States - Accessibility */
+.button-primary:focus-visible,
+.button-secondary:focus-visible {
+    outline: 3px solid rgba(66, 153, 225, 0.6);
+    outline-offset: 2px;
+}
+
+/* Loading State Animation */
+.button-primary.loading,
+.button-secondary.loading {
+    pointer-events: none;
+}
+
+.button-primary.loading .button-icon,
+.button-secondary.loading .button-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Friend Counter */
+.friend-counter {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: var(--color-text);
+    text-align: center;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+/* Help Messages */
+.help-message {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #6c757d;
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-primary);
+    max-width: 400px;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Hidden state for loading indicator */
+.loading-indicator[hidden] {
+    display: none !important;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-indicator span {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+/* Input Error State */
+.input-name.error {
+    border-color: #dc3545;
+    background-color: #ffe6e6;
+}
+
+.input-name.error:focus {
+    outline-color: #dc3545;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Friend List Items with Individual Controls */
+.friend-item {
+    padding: 8px 12px;
+    margin: 5px 0;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.friend-item.item-hover {
+    background-color: #f8f9fa;
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.friend-item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.friend-name {
+    flex: 1;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.friend-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+/* Individual Action Buttons */
+.button-edit,
+.button-delete,
+.button-save,
+.button-cancel {
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-edit {
+    border-color: #007bff;
+    color: #007bff;
+}
+
+.button-edit:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.button-delete {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.button-delete:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.button-save {
+    border-color: #28a745;
+    color: #28a745;
+}
+
+.button-save:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+.button-cancel {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.button-cancel:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Edit Mode Styles */
+.friend-item.editing {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+.friend-edit-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.edit-input {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 2px solid var(--color-primary);
+    border-radius: 6px;
+    font-family: "Inter", sans-serif;
+    background-color: white;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.edit-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+/* Button Accessibility Improvements */
+.button-edit:focus,
+.button-delete:focus,
+.button-save:focus,
+.button-cancel:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Responsive Design Improvements */
+@media (max-width: 768px) {
+    .button-container {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .button-primary,
+    .button-secondary {
+        width: 100%;
+        max-width: none;
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .button-icon {
+        font-size: 16px;
+    }
+
+    .help-message {
+        max-width: none;
+        margin: 10px 20px;
+    }
+
+    .friend-item-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .friend-actions {
+        align-self: flex-end;
+    }
+
+    .friend-edit-content {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .edit-actions {
+        align-self: flex-end;
+    }
+
+    .edit-input {
+        width: 100%;
+    }
 }

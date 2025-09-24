@@ -27,12 +27,34 @@
             <ul id="listaAmigos" class="name-list" aria-labelledby="listaAmigos" role="list"></ul>
             <ul id="resultado" class="result-list" aria-live="polite"></ul>
 
+            <!-- Friend counter and help messages -->
+            <div id="friendCounter" class="friend-counter" aria-live="polite"></div>
+            <div id="helpMessage" class="help-message" aria-live="polite"></div>
+
+            <!-- Loading indicator -->
+            <div id="loadingIndicator" class="loading-indicator" hidden aria-label="Cargando sorteo">
+                <div class="spinner"></div>
+                <span>Sorteando...</span>
+            </div>
+
             <div class="button-container">
-                <button class="button-draw" onclick="sortearAmigo()" aria-label="Sortear amigo secreto">
-                    <img src="assets/play_circle_outline.png" alt="Ícono para sortear">
-                    Sortear amigo
+                <!-- Primary Action: Sortear -->
+                <button class="button-primary" onclick="sortearAmigo()" aria-label="Sortear amigo secreto">
+                    <span class="button-icon">🎲</span>
+                    <span class="button-text">Sortear Amigo</span>
+                </button>
+
+                <!-- Secondary Action: Limpiar -->
+                <button id="clearAllBtn" class="button-secondary" onclick="limpiarListaConConfirmacion()"
+                        aria-label="Limpiar toda la lista de amigos"
+                        title="Eliminar todos los amigos de la lista">
+                    <span class="button-icon">🗑️</span>
+                    <span class="button-text">Limpiar Todo</span>
                 </button>
             </div>
+
+            <!-- Live region for accessibility announcements -->
+            <div id="announcements" aria-live="polite" aria-atomic="true" class="sr-only"></div>
         </section>
     </main>
 
